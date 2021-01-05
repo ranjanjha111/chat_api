@@ -12,7 +12,7 @@ const signup = async (req, res) => {
         const token = await user.generateAuthToken()
 
         // send email
-        // singupVerificationMail(user, token)
+        singupVerificationMail(user, token)
         res.status(201).json({ user, token })     
     } catch (e) {
         res.status(400).send({error: 'Email is taken'})
@@ -29,7 +29,7 @@ const activateAccount = async (req, res) => {
         await user.save()
 
         // send email
-        // singupVerifiedMail(user)
+        singupVerifiedMail(user)
     } catch (e) {
         res.status(400).send({error: 'Invalid link'})
     }
