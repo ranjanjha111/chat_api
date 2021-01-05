@@ -16,7 +16,8 @@ router.get('/users/:id', auth, getUser);
 
 router.get('/users/me', auth, userProfile)
 // router.get('/users', auth, admin, getUsers)
-router.get('/users', auth, getUsers)
+// router.get('/users', auth, getUsers)
+router.get('/users', getUsers)
 router.patch('/users/me', auth, updateUser)
 
 module.exports = router
