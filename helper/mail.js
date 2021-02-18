@@ -10,9 +10,10 @@ const sendMail = (to, subject, body) => {
     };
 
     sgMail.send(mailOptions, (error, result) => {
-        if (error) return res.status(500).json({success: false, error: error.message});
+        // if (error) return res.status(500).json({success: false, error: error.message});
+        if (error) return {success: false, error: error.message};
 
-        return result;
+        return {success: true}
     }); 
 }
 
@@ -37,19 +38,27 @@ const singupVerifiedMail = (user) => {
 const forgotPasswordMail = (user) => {
     let link = process.env.FRONT_END_URL + "/auth/reset/" + user.resetPasswordToken
 
-    sendMail(
+    return sendMail(
         user.email,
         `Password change request`,
         `Hi ${user.name} \n 
             Please click on the following link ${link} to reset your password. \n\n 
             If you did not request this, please ignore this email and your password will remain unchanged.\n`                    
     );
+}
 
-    res.status(200).json({success: true, message: 'A reset email has been sent to ' + user.email + '.'})
+const resetPasswordConfirmationMail = (user) => {
+    // send email
+    return sendMail(
+        user.email,
+        `Your password has been changed`,
+        `This is a confirmation that the password for your account ${user.email} has just been changed.\n`
+    );
 }
 
 module.exports = {
     singupVerificationMail,
     singupVerifiedMail,
-    forgotPasswordMail    
+    forgotPasswordMail,
+    resetPasswordConfirmationMail
 };
