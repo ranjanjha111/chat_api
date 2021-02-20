@@ -27,8 +27,15 @@ const uploadFile = (req, res ) => {
 }
 
 const getUsers = async (req, res) => {
-    const users = await User.find({_id: { $ne: req.user._id }})
-    if(!users) {
+    let match = {_id: { $ne: req.user._id }}
+    if(req.query.name) {
+        match.name = { $regex: '.*' + req.query.name + '.*' , $options: 'i'}
+    }
+
+    const users = await User.find(match)
+
+    console.log(Object.keys(users).length)
+    if(!Object.keys(users).length) {
         return res.status(400).json({
             error: 'User not found'
         });
