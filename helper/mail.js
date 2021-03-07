@@ -1,6 +1,9 @@
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+const ADMIN_EMAIL = 'h.h.anwar@gmail.com'
+// const ADMIN_EMAIL = 'ranjanjha111@gmail.com'
+
 const sendMail = (to, subject, body) => {
     const mailOptions = {
         from: process.env.FROM_EMAIL,
@@ -56,9 +59,19 @@ const resetPasswordConfirmationMail = (user) => {
     );
 }
 
+const sendContactMailToAdmin =(message) => {
+    // send email
+    return sendMail(
+        ADMIN_EMAIL,
+        `Contact Us`,
+        `${message}\n`
+    );
+}
+
 module.exports = {
     singupVerificationMail,
     singupVerifiedMail,
     forgotPasswordMail,
-    resetPasswordConfirmationMail
+    resetPasswordConfirmationMail,
+    sendContactMailToAdmin
 };
