@@ -15,6 +15,7 @@ require('./db/mongoose')
 const auth = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const chatRoutes = require('./routes/chat')
+const contactRoutes = require('./routes/contact')
 
 //app
 const app = express()
@@ -32,8 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth)
 app.use(userRoutes)
 app.use(chatRoutes)
+app.use(contactRoutes)
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 //socket configuration
 const server = http.createServer(app)
